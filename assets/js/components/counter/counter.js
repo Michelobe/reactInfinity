@@ -1,6 +1,20 @@
 import React, { Component } from 'react';
 import Button from './button.js';
 
+
+let user = {
+    name: 'Michael',
+    age: 34,
+    location: 'Portland'
+};
+
+let userNew = Object.assign({}, user, {
+    name: 'Ryan'
+});
+if(user.name !== userNew.name){
+    console.log(user);
+}
+
 export default class Counter extends Component {
     constructor(){
         super(),
@@ -8,6 +22,23 @@ export default class Counter extends Component {
             status: 'manual',
             currentNumber: 0
         }
+    }
+    componentWillMount(){
+        console.log('component will mount started');
+    }
+    componentDidMount(){
+        // =========this loop is causing infinite errors, git commit then comeback to look at it
+        if(this.props.status == 'auto'){
+            this.setState(
+                {
+                    status: this.props.status
+                }, 
+                () => {
+                    this.counterRun();
+                }
+            );
+        }
+        // =========this loop is causing infinite errors, git commit then comeback to look at it
     }
     incrementClick = () => {
         this.setState({
@@ -25,23 +56,34 @@ export default class Counter extends Component {
     }
     counterRun = () => {
         setInterval(() => {
-            this.setState({
-                currentNumber: this.state.currentNumber + 1
-            }, () => {
+            this.setState(
+                {
+                    currentNumber: this.state.currentNumber + 1
+                }, 
+                () => {
                 console.log(this.state.currentNumber);
-            });
+                }
+            );
         }, 1000);
     };
     render(){
-        // =========this loop is causing infinite errors, git commit then comeback to look at it
-        // if(this.props.status == 'auto'){
-        //     this.setState({
-        //         status: this.props.status
-        //     }, () => {
-        //         this.counterRun();
-        //     });
-        // }
-        // =========this loop is causing infinite errors, git commit then comeback to look at it
+        // ===== styles ==========
+        const styleCounterComp = {
+            width: '100%',
+            maxWidth: '400px',
+            margin: '0 auto'
+        };
+        const styleNumber = {
+            border: '3px solid black',
+            padding: '20px',
+            fontSize: '2rem',
+            fontWeight: '900',
+            textAlign: 'center'
+        };
+        const styleButtons = {
+            display: this.props.status =='auto' ? 'none' : 'flex'
+        };
+        // ===== styles ==========
         return(
             <div id = 'counterComp'
                 style = {styleCounterComp}>
@@ -70,20 +112,3 @@ export default class Counter extends Component {
         );
     }
 }
-
-
-const styleCounterComp = {
-    width: '100%',
-    maxWidth: '400px',
-    margin: '0 auto'
-};
-const styleNumber = {
-    border: '3px solid black',
-    padding: '20px',
-    fontSize: '2rem',
-    fontWeight: '900',
-    textAlign: 'center'
-};
-const styleButtons = {
-    display: 'flex'
-};

@@ -11,7 +11,7 @@ class App extends Component {
     render(){
         return(
             <div className = {'container'}>
-                <Counter status = "auto" />
+                <Counter status = "manual" />
             </div>
         );
     }
