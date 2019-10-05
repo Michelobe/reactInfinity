@@ -2,19 +2,6 @@ import React, { Component } from 'react';
 import Button from './button.js';
 
 
-let user = {
-    name: 'Michael',
-    age: 34,
-    location: 'Portland'
-};
-
-let userNew = Object.assign({}, user, {
-    name: 'Ryan'
-});
-if(user.name !== userNew.name){
-    console.log(user);
-}
-
 export default class Counter extends Component {
     constructor(){
         super(),
